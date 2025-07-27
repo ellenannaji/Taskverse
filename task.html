@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>To-Do App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      padding: 20px;
+    }
+
+    h2 {
+      margin-top: 40px;
+      color: #333;
+    }
+
+    .todo-section {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 40px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    input[type="text"] {
+      width: 70%;
+      padding: 10px;
+      font-size: 16px;
+    }
+
+    button {
+      padding: 10px 16px;
+      font-size: 16px;
+      margin-left: 10px;
+      cursor: pointer;
+      background-color: #4CAF50;
+      border: none;
+      color: white;
+      border-radius: 5px;
+    }
+
+    ul {
+      list-style-type: none;
+      margin-top: 20px;
+      padding-left: 0;
+    }
+
+    li {
+      background: #eee;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 8px;
+    }
+
+    .upload-container {
+      margin-top: 10px;
+    }
+
+    .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .points-box {
+      font-weight: bold;
+      color: #4CAF50;
+    }
+  </style>
+</head>
+
+
+
+<body>
+
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+
+<script>
+ const firebaseConfig = {
+      apiKey: "AIzaSyB0tIQhf8dwv0ER73J_zkeN4ND58FXxFhc",
+      authDomain: "taskverse-188a6.firebaseapp.com",
+      projectId: "taskverse-188a6",
+      storageBucket: "taskverse-188a6.firebasestorage.app",
+      messagingSenderId: "304790320450",
+      appId: "1:304790320450:web:6477308b69c58f036804db",
+      measurementId: "G-SV1NMPRNVM"
+    };
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+const auth = firebase.auth();
+</script>
+
+
+  <h1>My To-Do Dashboard</h1>
+
+  <!-- Personal To-Do List -->
+  <div class="todo-section">
+    <h2>📝 Personal To-Do List</h2>
+    <input type="text" id="personal-task-input" placeholder="Enter personal task..." />
+    <button onclick="addPersonalTask()">Add</button>
+    <ul id="personal-task-list"></ul>
+  </div>
+
+  <!-- Professional To-Do List -->
+  <div class="todo-section">
+    <h2>📁 Professional To-Do List</h2>
+    <input type="text" id="professional-task-input" placeholder="Enter professional task..." />
+    <button onclick="addProfessionalTask()">Add</button>
+    <ul id="professional-task-list"></ul>
+  </div>
+
+  <div class="todo-section">
+    <h2>🏆 Points Earned: <span id="points">0</span></h2>
+  </div>
+
+  <div class="top">
+    <button onclick="goBack()" style="background-color: #f44336;">← Back</button>
+    <span class="points-box">Welcome back!</span>
+  </div>
+
+  <script>
+    // Personal To-Do
+    function addPersonalTask() {
+      const input = document.getElementById("personal-task-input");
+      const value = input.value.trim();
+      if (value) {
+        const list = document.getElementById("personal-task-list");
+        const li = document.createElement("li");
+
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.onchange = () => li.remove();
+
+        li.appendChild(checkbox);
+        li.appendChild(document.createTextNode(" " + value));
+        list.appendChild(li);
+        input.value = "";
+      }
+    }
+
+    // Professional To-Do
+    let points = 0;
+
+    function addProfessionalTask() {
+      const input = document.getElementById("professional-task-input");
+      const value = input.value.trim();
+      if (value) {
+        const list = document.getElementById("professional-task-list");
+        const li = document.createElement("li");
+
+        const taskName = document.createElement("div");
+        taskName.textContent = value;
+        li.appendChild(taskName);
+
+        const uploadDiv = document.createElement("div");
+        uploadDiv.className = "upload-container";
+
+        const fileInput = document.createElement("input");
+        fileInput.type = "file";
+
+        const uploadBtn = document.createElement("button");
+        uploadBtn.textContent = "Upload";
+
+        let uploaded = false;
+
+        uploadBtn.onclick = () => {
+          if (fileInput.files.length > 0) {
+            uploaded = true;
+            uploadBtn.textContent = "Uploaded";
+            uploadBtn.disabled = true;
+            fileInput.disabled = true;
+
+            li.style.backgroundColor = "#d4ffd4";
+
+            const doneText = document.createElement("div");
+            doneText.textContent = "✅ Submitted";
+            doneText.style.color = "green";
+            doneText.style.marginTop = "10px";
+            li.appendChild(doneText);
+
+            updatePoints(10);
+          } else {
+            alert("Please select a file.");
+          }
+        };
+
+        uploadDiv.appendChild(fileInput);
+        uploadDiv.appendChild(uploadBtn);
+
+        li.appendChild(uploadDiv);
+        list.appendChild(li);
+        input.value = "";
+      }
+    }
+
+    function updatePoints(val) {
+      points += val;
+      document.getElementById("points").textContent = points;
+    }
+
+    function goBack() {
+      window.location.href = "DASH.html";
+    }
+
+    // Redirect if not logged in
+    window.onload = function () {
+      const isLoggedIn = localStorage.getItem("isLoggedIn");
+      if (isLoggedIn !== "true") {
+        alert("Please login to access your tasks.");
+        window.location.href = "login.html";
+      }
+    };
+
+    function completeTask(points = 5) {
+  const user = auth.currentUser;
+  if (!user) return;
+
+  const userRef = db.collection("users").doc(user.uid);
+  userRef.get().then(doc => {
+    if (doc.exists) {
+      const currentPoints = doc.data().points || 0;
+      userRef.update({
+        points: currentPoints + points
+      });
+    } else {
+      userRef.set({
+        email: user.email,
+        points: points
+      });
+    }
+  });
+}
+  </script>
+</body>
+</html>

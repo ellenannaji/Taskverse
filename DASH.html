@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Welcome to Your Learning Hub</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+      color: #333;
+      padding: 40px 20px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      background: linear-gradient(to right, #6a11cb, #2575fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: pop 1s ease;
+    }
+
+    .subtitle {
+      font-size: 1rem;
+      max-width: 700px;
+      margin: 20px auto 0;
+      color: #444;
+      animation: fadeIn 1.2s ease;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .section {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 75px;
+      margin-bottom: 40px;
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 12px;
+      padding: 30px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+
+    .section:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .image-container {
+      flex: 1 1 45%;
+      max-height: 250px;
+      overflow: hidden;
+      border-radius: 10px;
+    }
+
+    .image-container img {
+      width: 50%;
+      height: 50%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+    .image-offset {
+  margin-right: -30px; /* try -20px or -40px to tweak how far it moves */
+}
+    .todo-img-shift{
+        margin-left: 30px;
+
+    }
+    .section:hover .image-container img {
+      transform: scale(1.07);
+    }
+
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.points-box {
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+
+    .content {
+      flex: 1 1 50%;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    h2 {
+      font-size: 1.6rem;
+      color: #444;
+      margin-bottom: 10px;
+      transition: transform 0.3s ease;
+    }
+
+    .section:hover h2 {
+      transform: scale(1.05);
+    }
+
+    p {
+      color: #555;
+      transition: color 0.3s ease;
+    }
+
+    .section:hover p {
+      color: #222;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pop {
+      0% { transform: scale(0.95); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    @media (max-width: 768px) {
+      .section {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .content, .image-container {
+        flex: 1 1 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Welcome to the Learning Hub</h1>
+    <p class="subtitle">Discover inspiring resources to boost your daily learning. Simple. Clear. Fast.</p>
+  </header>
+
+  <div class="container">
+    <!-- Leaderboard: Image on left, text on right -->
+    <a href="task.html" style="text-decoration: none; color: inherit;">
+      <div class="section">
+        <div class="image-container">
+          <img src="todo.jpg" alt="To Do List">
+        </div>
+        <div class="content">
+          <h2>TO DO LIST</h2>
+          <p>Get the things you need to do within the given deadline!.</p>
+        </div>
+      </div>
+    </a>
+
+    <!-- To Do List: Text on left, image on right -->
+    <a href="leader.html" style="text-decoration: none; color: inherit;">
+      <div class="section row-reverse-section" style="flex-direction: row-reverse;">
+  <div class="image-container image-offset">
+    <img src="leaderbord.jpg" alt="Leaderboard">
+  </div>
+  <div class="content">
+    <h2>YOUR SCOREBOARD</h2>
+    <p>Keep fighting and try to get on top in the leaderboard</p>
+  </div>
+</div>
+    </a>
+  </div>
+
+<div class="top">
+  <button onclick="goToLogin()" style="background-color: #f44336; color: white; padding: 10px 16px; border: none; border-radius: 6px; cursor: pointer;">
+    ← Back
+  </button>
+  <span class="points-box">Dashboard</span>
+</div>
+
+
+
+  <script>
+    // Redirect to tasks page
+    function goToTasks() {
+      const isLoggedIn = localStorage.getItem("isLoggedIn");
+      if (isLoggedIn === "true") {
+        window.location.href = "task.html";
+      } else {
+        alert("Please log in first.");
+        window.location.href = "login.html";
+      }
+    }
+
+    // Auto-check login status on page load
+    window.onload = function () {
+      const isLoggedIn = localStorage.getItem("isLoggedIn");
+      if (isLoggedIn !== "true") {
+        alert("You are not logged in!");
+        window.location.href = "login.html";
+      }
+    };
+  </script>
+
+  <script>
+  function goToLogin() {
+    window.location.href = "login.html";
+  }
+</script>
+</body>
+</html>

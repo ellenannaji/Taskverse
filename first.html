@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🚀 Gamified To-Do</title>
+  <style>
+    /* 🌈 Background Gradient */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #0f0c29, #7c54f2, #43437e);
+      color: white;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* 💎 Glassmorphism Card */
+    .card {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 2rem;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      max-width: 90%;
+      width: 400px;
+    }
+
+    /* ✨ Neon Text Animation */
+    .title {
+      font-size: 2.2rem;
+      font-weight: bold;
+      color: #fff;
+      text-shadow: 0 0 5px #00f2ff, 0 0 10px #00f2ff, 0 0 20px #00f2ff;
+      animation: glow 1.5s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+      from {
+        text-shadow: 0 0 5px #00f2ff;
+      }
+      to {
+        text-shadow: 0 0 20px #00f2ff, 0 0 30px #00f2ff;
+      }
+    }
+
+    /* 🧃 Buttons */
+    .btn {
+      background: #00f2ff;
+      color: black;
+      border: none;
+      padding: 10px 20px;
+      margin-top: 1rem;
+      font-size: 1rem;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background: #00c2cc;
+    }
+
+    /* 📱 Responsive */
+    @media (max-width: 500px) {
+      .title {
+        font-size: 1.8rem;
+      }
+      .card {
+        padding: 1.2rem;
+      }
+    }
+  </style>
+</head>
+
+<!-- Firebase SDKs (v10+) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-storage-compat.js"></script>
+<body>
+  <div class="card">
+    <div class="title">🎯 Welcome to TaskVerse</div>
+    <p>Plan. Track. Win. 💼💥<br/>Your team-based gamified to-do tracker</p>
+
+<button class="btn" onclick="location.href='login.html'">Log In</button>
+  </div>
+
+  <script>
+    
+const firebaseConfig = {
+    apiKey: 'AIzaSyAf0qEQlh3lHXlFJq2XC4uUDwChyn670VQ',
+    authDomain: 'task-5b0c1.firebaseapp.com',
+    projectId: 'task-5b0c1',
+    storageBucket: 'task-5b0c1.appspot.com',
+    messagingSenderId: '855918995462',
+    appId: '1:855918995462:web:cbe7bbc9452e29f1573b87',
+    measurementId: 'G-2R3NRZS054'
+  };
+  
+
+
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const db = firebase.firestore();
+  const storage = firebase.storage();
+    function goToNext() {
+      window.location.href = "login.html";
+    }
+  </script>
+</body>
+</html>

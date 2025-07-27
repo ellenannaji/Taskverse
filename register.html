@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>📝 Register | TaskVerse</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #1f1c2c, #928dab);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .card {
+      background: rgba(250, 180, 232, 0.1);
+      border-radius: 20px;
+      padding: 40px;
+      backdrop-filter: blur(15px);
+      color: #fff;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+      text-align: center;
+      width: 90%;
+      max-width: 400px;
+    }
+
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: #00ffff;
+      text-shadow: 0 0 10px #0ff;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      background: rgba(229, 154, 239, 0.2);
+      color: #fff;
+    }
+
+    input::placeholder {
+      color: #ddd;
+    }
+
+    .btn {
+      background: #00ffff;
+      color: #000;
+      font-weight: bold;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+      margin-top: 10px;
+      width: 100%;
+    }
+
+    .btn:hover {
+      background: #00ccff;
+    }
+
+    .link {
+      margin-top: 15px;
+      font-size: 0.9rem;
+      color: #ccc;
+    }
+
+    #message {
+      margin-top: 15px;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Register to TaskVerse</h2>
+    <form id="registerForm">
+      <input type="email" id="regEmail" placeholder="Choose an email" required />
+      <input type="password" id="regPassword" placeholder="Create a password" required />
+      <button class="btn" type="submit">Create Account</button>
+    </form>
+    <div class="link">
+      Already have an account? <a href="login.html">Login</a>
+    </div>
+    <p id="message"></p>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+
+  <script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+
+<script>
+ const firebaseConfig = {
+      apiKey: "AIzaSyB0tIQhf8dwv0ER73J_zkeN4ND58FXxFhc",
+      authDomain: "taskverse-188a6.firebaseapp.com",
+      projectId: "taskverse-188a6",
+      storageBucket: "taskverse-188a6.firebasestorage.app",
+      messagingSenderId: "304790320450",
+      appId: "1:304790320450:web:6477308b69c58f036804db",
+      measurementId: "G-SV1NMPRNVM"
+    };
+
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+const auth = firebase.auth();
+</script>
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    const form = document.getElementById("registerForm");
+    const message = document.getElementById("message");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      message.textContent = "";
+
+      const email = document.getElementById("regEmail").value.trim();
+      const password = document.getElementById("regPassword").value;
+
+      auth.createUserWithEmailAndPassword(email, password)
+        .then(() => {
+          message.style.color = "lightgreen";
+          message.textContent = "Registration successful! Redirecting...";
+          setTimeout(() => {
+            window.location.href = "login.html";
+          }, 2000);
+        })
+        .catch(error => {
+          message.style.color = "red";
+          message.textContent = error.message;
+        });
+    });
+  </script>
+</body>
+</html>
